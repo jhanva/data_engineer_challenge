@@ -1,9 +1,12 @@
 """Módulo con las funciones necesarias para realizar lectura de archivos."""
 
 # External libraries
+import os
+import zipfile
 from datetime import datetime
 from typing import Union
 
+import gdown
 import orjson
 import pandas as pd
 
@@ -59,3 +62,37 @@ def read_json_file(
         raise NotImplementedError(msg)
 
     return data
+
+
+def download_and_extract_gdrive(file_id: str, target_dir: str) -> None:
+    """Descarga un archivo de Google Drive y lo descomprime en un directorio
+     especificado.
+
+    Args:
+        file_id (str): ID del archivo en Google Drive.
+        target_dir (str): Directorio de destino para la descarga y extracción.
+
+    Returns:
+        None
+
+    Raises:
+        ValueError: Si el ID del archivo o el directorio de destino no son
+         válidos.
+        FileNotFoundError: Si el archivo descargado no se encuentra.
+
+    """
+    download_url = f'https://drive.google.com/uc?id={file_id}'
+
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+
+    output_file = os.path.join(target_dir, 'archivo.zip')
+
+    gdown.download(download_url, output_file, quiet=False)
+
+    with zipfile.ZipFile(output_file, 'r') as zip_ref:
+        zip_ref.extractall(target_dir)
+
+    os.remove(output_file)
+
+    print('Archivo descargado y descomprimido con éxito.')
