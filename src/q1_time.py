@@ -11,6 +11,21 @@ from src.utils import read_json_file
 
 
 def q1_time(file_path: str) -> List[Tuple[datetime.date, str]]:
+    """Lee un archivo JSON y devuelve una lista de tuplas que contiene la
+     fecha y el usuario más activo para cada día.
+
+    Args:
+        file_path (str): Ruta del archivo JSON.
+
+    Returns:
+        List[Tuple[datetime.date, str]]: Lista de tuplas donde cada tupla
+         contiene la fecha (como objeto datetime.date) y el usuario más activo
+         para ese día.
+
+    Raises:
+        FileNotFoundError: Si el archivo especificado no se encuentra.
+
+    """
     try:
         table = read_json_file(file_path)
     except FileNotFoundError:
