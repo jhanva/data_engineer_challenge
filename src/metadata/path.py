@@ -10,5 +10,8 @@ class Path:
     data = os.path.join('data')
     """Ruta a los datos necesarios para ejecutar el proyecto."""
 
+    info_proyecto = os.path.join('input', 'challenge.yaml')
+    """Archivo YAML con los datos del desafio."""
+
     tweets = os.path.join('data', 'farmers-protest-tweets-2021-2-4.json')
     """Ruta al archivo JSON con tweets."""

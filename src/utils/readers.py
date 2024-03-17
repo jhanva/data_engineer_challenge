@@ -9,6 +9,7 @@ from typing import Union
 import gdown
 import orjson
 import pandas as pd
+import yaml
 
 
 def read_json_file(
@@ -96,3 +97,26 @@ def download_and_extract_gdrive(file_id: str, target_dir: str) -> None:
     os.remove(output_file)
 
     print('Archivo descargado y descomprimido con éxito.')
+
+
+def read_yaml(file_path: str) -> dict:
+    """Lee un archivo YAML y devuelve su contenido como un diccionario.
+
+    Args:
+        file_path (str): Ruta del archivo YAML.
+
+    Returns:
+        dict: Contenido del archivo YAML como un diccionario.
+
+    Raises:
+        FileNotFoundError: Si no se encuentra el archivo YAML especificado.
+
+    """
+    try:
+        with open(file_path, 'r') as file:
+            yaml_data = yaml.safe_load(file)
+        return yaml_data
+
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            f'No se encontró el archivo en la ruta especificada: {file_path}')
