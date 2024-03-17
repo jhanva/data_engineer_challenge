@@ -2,12 +2,14 @@
 
 # External libraries
 from collections import Counter
+from memory_profiler import profile
 from typing import List, Tuple
 
 # Own libraries
 from src.utils import count_emoji, read_json_file
 
 
+@profile
 def q2_memory(file_path: str) -> List[Tuple[str, int]]:
     """Lee un archivo JSON y devuelve una lista de tuplas con los 10 emojis
      más frecuentes y su conteo.

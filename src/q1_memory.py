@@ -2,12 +2,14 @@
 
 # External libraries
 from datetime import datetime
+from memory_profiler import profile
 from typing import List, Tuple
 
 # Own libraries
 from src.utils import read_json_file
 
 
+@profile
 def q1_memory(file_path: str) -> List[Tuple[datetime.date, str]]:
     """Lee un archivo JSON y devuelve una lista de tuplas que contiene la
      fecha y el usuario más activo para cada día.

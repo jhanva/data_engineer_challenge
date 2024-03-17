@@ -1,12 +1,14 @@
 """Script con solución al problema del top 10 usuarios influyentes."""
 
 # External libraries
+from memory_profiler import profile
 from typing import List, Tuple
 
 # Own libraries
 from src.utils import read_json_file
 
 
+@profile
 def q3_memory(file_path: str) -> List[Tuple[str, int]]:
     """Lee un archivo JSON y devuelve una lista de tuplas con las 10 menciones
      de usuarios más frecuentes y su conteo.
