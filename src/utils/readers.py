@@ -9,7 +9,7 @@ import pandas as pd
 
 
 def read_json_file(
-    path: str, transformation: bool = False
+    path: str, transformation: str = 'pandas'
 ) -> Union[pd.DataFrame, list]:
     """Lee un archivo JSON y lo convierte en un DataFrame de Pandas.
 
@@ -23,7 +23,7 @@ def read_json_file(
     """
     tmp = []
 
-    if transformation:
+    if transformation == 'date_list':
         with open(path, mode="rb") as file:
             for line in file:
                 data = orjson.loads(line)
@@ -32,13 +32,30 @@ def read_json_file(
                 date = datetime.strptime(date_str, '%Y-%m-%d').date()
                 tmp.append((date, user))
         data = tmp
-    else:
+
+    elif transformation == 'content_list':
+        with open(path, mode="rb") as file:
+            for line in file:
+                record = orjson.loads(line)
+                user = record['user']['username']
+                date = record['date']
+                content = record['content']
+                tmp.append((user, date, content))
+        data = tmp
+
+    elif transformation == 'dataframe':
         with open(path, mode="rb") as file:
             for line in file:
                 tmp.append(orjson.loads(line))
-
         data = pd.DataFrame(tmp)
         data['user'] = data['user'].apply(lambda x: x['username'])
         data['date'] = pd.to_datetime(data['date'])
+
+    else:
+        msg = (
+            'Solo se permite transformaciones de tipo '
+            'dataframe, date_list y content_list'
+        )
+        raise NotImplementedError(msg)
 
     return data
