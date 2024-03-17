@@ -1,4 +1,30 @@
+"""Script con solución al problema del top 10 usuarios influyentes."""
+
+# External libraries
 from typing import List, Tuple
 
+# Own libraries
+from src.utils import find_mentions, read_json_file
+
+
 def q3_time(file_path: str) -> List[Tuple[str, int]]:
-    pass
+    """Lee un archivo JSON y devuelve una lista de tuplas con las 10 menciones
+     de usuarios más frecuentes y su conteo.
+
+    Args:
+        file_path (str): Ruta del archivo JSON que contiene los datos.
+
+    Returns:
+        List[Tuple[str, int]]: Lista de tuplas donde cada tupla contiene una
+         mención de usuario y su conteo correspondiente.
+
+    """
+    data = read_json_file(file_path)
+
+    data_serie = data['content'].apply(find_mentions)
+
+    data_serie = data_serie.explode().value_counts().head(10)
+
+    date_list = list(zip(data_serie.index, data_serie.tolist()))
+
+    return date_list

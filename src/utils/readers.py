@@ -9,7 +9,7 @@ import pandas as pd
 
 
 def read_json_file(
-    path: str, transformation: str = 'pandas'
+    path: str, transformation: str = 'dataframe'
 ) -> Union[pd.DataFrame, list]:
     """Lee un archivo JSON y lo convierte en un DataFrame de Pandas.
 
