@@ -21,7 +21,7 @@ def q1_memory(file_path: str) -> List[Tuple[datetime.date, str]]:
          para ese día.
 
     """
-    data = read_json_file(file_path, transformation=True)
+    data = read_json_file(file_path, transformation='date_list')
 
     user_counts = {}
     date_user = {}
